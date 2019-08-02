@@ -1,4 +1,4 @@
-require_relative "./epl_stats_cli/version"
+require_relative "./pl_stats/version"
 require_relative "./cli"
 
 module EplStatsCli

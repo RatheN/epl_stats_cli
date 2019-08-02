@@ -1,11 +1,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "epl_stats_cli/version"
+require "pl_stats/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "epl_stats_cli"
-  spec.version       = EplStatsCli::VERSION
+  spec.name          = "pl_stats"
+  spec.version       = PlStats::VERSION
   spec.authors       = ["'Nathan Rathe'"]
   spec.email         = ["'nprathe10@gmail.com'"]
 
