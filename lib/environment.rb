@@ -9,5 +9,6 @@ module PlStats
 end
 
 require_relative './scraper'
+require_relative './team'
 require_relative './cli'
 require_relative './pl_stats/version'
