@@ -1,7 +1,12 @@
 class PlStats::CLI
   def run
+    Scraper.new.make_teams
     puts "Welcome to the Premier League 2018-19 Table."
+    Team.all.each do |team|
+      puts "#{team.rank} #{team.name} #{team.goals_for} #{team.goals_against} #{team.points}"
+    end
     start
+
   end
 
   def start
@@ -33,7 +38,9 @@ class PlStats::CLI
     puts ""
     puts "Top 5 teams (1st - 5th in order):"
     puts ""
-    puts "(teams go here)"
+    Team.all[0, 5].each.with_index(1) do |team, index|
+      puts "#{index}. #{team.name}"
+    end
   end
 
   def mid_table_teams
@@ -55,4 +62,6 @@ class PlStats::CLI
     puts ""
     puts "(teams go here)"
   end
+
+
 end
