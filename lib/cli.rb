@@ -2,12 +2,7 @@ class PlStats::CLI
   def run
     Scraper.new.make_teams
     puts "Welcome to the Premier League 2018-19 Table."
-    Team.all[5, 1].each do |team|
-      puts "#{team.rank.join} #{team.name.join} #{team.goals_for.join} #{team.goals_against.join} #{team.points.join}"
-      puts "#{Team.all[5].name}"
       start
-    end
-
   end
 
   def start
@@ -28,9 +23,28 @@ class PlStats::CLI
 
     puts "\nWhich team's stats would you like to view?"
     puts "(enter a number from 1 - 20)"
-    input = gets.strip.to_i-1
+    input = gets.strip.to_i
 
-    team_stats(input)
+    if input >= 1 && input <= 20
+      team_stats(input-1)
+    else
+      while input < 1 || input > 20
+        puts "Please enter a valid number from 1 - 20"
+        input = gets.strip.to_i
+      end
+      team_stats(input-1)
+    end
+
+    puts "\n\n\n----------------------------------------"
+    puts "Would you like to view a different team or section of the table? Y/N"
+    input = gets.strip.downcase
+
+    if input == "y"
+      start
+    else
+      puts "Thank you. Best of luck to your favorite team next year!"
+      exit
+    end
   end
 
   def top_table_teams
@@ -64,6 +78,21 @@ class PlStats::CLI
   def team_stats(input)
     puts "\n\n----------#{Team.all[input].name.join}----------\n\n#{Team.all[input].name.join} finished the 2018/19 Premier League season ranked ##{Team.all[input].rank.join} on the table."
 
+    if input == 0
+      puts "\n#{Team.all[input].name.join} won the Premier League!\n\n"
+    elsif input >=1 && input <= 3
+      puts "\n#{Team.all[input].name.join} qualified for the UEFA Champions League.\n\n"
+    elsif input == 4
+      puts "\n#{Team.all[input].name.join} qualified for the UEFA Europa League.\n\n"
+    elsif input >= 5 && input <= 16
+      puts "\n#{Team.all[input].name.join} finished in the middle of the table and will play in the Premier League again next year.\n\n"
+    else
+      puts "\n#{Team.all[input].name.join} was relegated and will not play in the Premier League next year.\n\n"
+    end
+
+    puts "Goals For:      #{Team.all[input].goals_for.join}"
+    puts "Goals Against:  #{Team.all[input].goals_against.join}"
+    puts "Points:         #{Team.all[input].points.join}"
   end
 
 end
