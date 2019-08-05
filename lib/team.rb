@@ -17,7 +17,7 @@ class Team
 
   def self.new_from_table(t)
     self.new(
-      t.css('.nd-table-td.tbl-rank.nd-team').collect {|c| c.css('span').text.strip.delete('[]')},
+      t.css('.nd-table-td.tbl-rank.nd-team').collect {|c| c.css('span').text.strip},
       t.css('.nd-table-td.tbl-team').collect {|c| c.css('span').text.strip},
       t.css('.nd-table-td.tbl-gf').collect {|c| c.css('span').text.strip},
       t.css('.nd-table-td.tbl-ga').collect {|c| c.css('span').text.strip},
@@ -25,7 +25,4 @@ class Team
       )
   end
 
-  def self.find(r)
-    self.all[r-1]
-  end
 end

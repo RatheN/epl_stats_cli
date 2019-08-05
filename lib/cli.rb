@@ -2,15 +2,16 @@ class PlStats::CLI
   def run
     Scraper.new.make_teams
     puts "Welcome to the Premier League 2018-19 Table."
-    Team.all.each do |team|
-      puts "#{team.rank} #{team.name} #{team.goals_for} #{team.goals_against} #{team.points}"
+    Team.all[5, 1].each do |team|
+      puts "#{team.rank.join} #{team.name.join} #{team.goals_for.join} #{team.goals_against.join} #{team.points.join}"
+      puts "#{Team.all[5].name}"
+      start
     end
-    start
 
   end
 
   def start
-    puts "Would you like to view the top of the table, the middle of the table, or the bottom of the table?"
+    puts "\nWould you like to view the top of the table, the middle of the table, or the bottom of the table?"
     puts "(please enter: 'top', 'middle', or 'bottom')"
     input = gets.strip.downcase
 
@@ -25,43 +26,44 @@ class PlStats::CLI
       start
     end
 
-    puts ""
-    puts "Which team's stats would you like to view?"
+    puts "\nWhich team's stats would you like to view?"
     puts "(enter a number from 1 - 20)"
+    input = gets.strip.to_i-1
+
+    team_stats(input)
   end
 
   def top_table_teams
-    puts ""
-    puts "These are the teams from the 2018-19 season that finished in the top 5 of the table."
+    puts "\nThese are the teams from the 2018-19 season that finished in the top 5 of the table."
     puts "The top 4 teams in the Premier League qualify for the UEFA Champions League."
     puts "The team that finishes in 5th place qualifies for the UEFA Europa League."
-    puts ""
-    puts "Top 5 teams (1st - 5th in order):"
-    puts ""
-    Team.all[0, 5].each.with_index(1) do |team, index|
-      puts "#{index}. #{team.name}"
+    puts "\nTop 5 teams (1st - 5th in order):\n"
+    Team.all[0, 5].each do |team|
+      puts "#{team.rank.join}.  #{team.name.join}"
     end
   end
 
   def mid_table_teams
-    puts ""
-    puts "These are the teams from the 2018-19 season that finished in the middle of the table."
+    puts "\nThese are the teams from the 2018-19 season that finished in the middle of the table."
     puts "These teams did not qualify for the UEFA Champions League or the UEFA Europa League, but they were not relegated to a lower level league."
-    puts ""
-    puts "Middle of the table teams (6th - 17th in order):"
-    puts ""
-    puts "(teams go here)"
+    puts "\nMiddle of the table teams (6th - 17th in order):\n"
+    Team.all[5, 12].each do |team|
+      puts "#{team.rank.join}.  #{team.name.join}"
+    end
   end
 
   def bottom_table_teams
-    puts ""
-    puts "These are the teams from the 2018-19 season that finished at the bottom of the table."
-    puts "These teams finished in the bottom 3 places and were relegated to a lower level league in England."
-    puts ""
-    puts "Bottom of the table teams (18th - 20th in order):"
-    puts ""
-    puts "(teams go here)"
+    puts "\nThese are the teams from the 2018-19 season that finished at the bottom of the table."
+    puts "These teams were relegated to a lower level league in England."
+    puts "\nBottom of the table teams (18th - 20th in order):\n"
+    Team.all[17, 3].each do |team|
+      puts "#{team.rank.join}.  #{team.name.join}"
+    end
   end
 
+  def team_stats(input)
+    puts "\n\n----------#{Team.all[input].name.join}----------\n\n#{Team.all[input].name.join} finished the 2018/19 Premier League season ranked ##{Team.all[input].rank.join} on the table."
+
+  end
 
 end
